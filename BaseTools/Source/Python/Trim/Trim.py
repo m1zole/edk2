@@ -372,7 +372,8 @@ def TrimAslFile(Source, Target, IncludePathFile,AslDeps = False):
     AslIncludes = []
     Lines = DoInclude(Source, '', IncludePathList,IncludeFileList=AslIncludes,filetype='ASL')
     AslIncludes = [item for item in AslIncludes if item !=Source]
-    SaveFileOnChange(os.path.join(os.path.dirname(Target),os.path.basename(Source))+".trim.deps", " \\\n".join([Source+":"] +AslIncludes),False)
+    if AslDeps and AslIncludes:
+        SaveFileOnChange(os.path.join(os.path.dirname(Target),os.path.basename(Source))+".trim.deps", " \\\n".join([Source+":"] +AslIncludes),False)
 
     #
     # Undef MIN and MAX to avoid collision in ASL source code
